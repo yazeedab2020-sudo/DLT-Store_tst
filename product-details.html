@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج - DLT Store</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;500;700;800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B001A',
+                        cardBg: '#1A0B2E',
+                        neonGreen: '#00FFA3',
+                        neonPurple: '#D900FF',
+                        neonBlue: '#00F0FF',
+                        spaceBlue: '#2D1B69',
+                    },
+                    fontFamily: {
+                        sans: ['Changa', 'sans-serif'],
+                        pixel: ['Silkscreen', 'cursive'],
+                    },
+                    backgroundImage: {
+                        'space-gradient': 'radial-gradient(circle at center, #2D1B69 0%, #0B001A 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-darkBg text-white flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-cardBg/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            
+            <!-- Mobile Menu Button (Right) -->
+            <button id="mobile-menu-btn" class="md:hidden text-neonPurple hover:text-white p-2 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+
+            <div class="text-xl md:text-2xl font-bold font-pixel text-neonPurple tracking-wider flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2 glitch-hover">
+                    <span class="text-2xl md:text-3xl">🪐</span> DLT <span class="text-neonBlue">STORE</span>
+                </a>
+            </div>
+
+            <div class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="index.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)] glitch-hover">الرئيسية</a>
+                <a href="pc-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)] glitch-hover">ألعاب PC</a>
+                <a href="offline-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)] glitch-hover">ألعاب أوفلاين</a>
+            </div>
+            
+            <div class="flex items-center space-x-2 md:space-x-4 space-x-reverse">
+                <button class="hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </button>
+                <div id="account-area" class="flex items-center"></div>
+                <a href="checkout.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-neonBlue text-darkBg text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_#00F0FF] hidden">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[200] bg-[#0B001A] hidden flex-col w-full h-full transition-all duration-300 overflow-y-auto">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-0 border-b border-white/10 bg-[#1A0B2E]">
+            <div class="px-4 py-4 text-xl font-bold text-white font-pixel glitch-hover">القائمة الرئيسية</div>
+            <button id="close-menu-btn" class="bg-red-600 hover:bg-red-700 text-white p-4 transition h-full flex items-center justify-center rounded-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <!-- Links -->
+        <div class="flex flex-col w-full bg-[#0B001A]">
+            <a href="index.html" class="block w-full py-4 px-6 text-right text-white text-lg font-bold border-b border-white/10 hover:bg-white/5 hover:text-neonPurple transition flex items-center gap-3 glitch-hover">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                الرئيسية
+            </a>
+            <a href="pc-games.html" class="block w-full py-4 px-6 text-right text-white text-lg font-bold border-b border-white/10 hover:bg-white/5 hover:text-neonPurple transition flex items-center gap-3 glitch-hover">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                ألعاب PC
+            </a>
+            <a href="offline-games.html" class="block w-full py-4 px-6 text-right text-white text-lg font-bold border-b border-white/10 hover:bg-white/5 hover:text-neonPurple transition flex items-center gap-3 glitch-hover">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>
+                ألعاب أوفلاين
+            </a>
+            <a href="checkout.html" class="block w-full py-4 px-6 text-right text-white text-lg font-bold border-b border-white/10 hover:bg-white/5 hover:text-neonPurple transition flex items-center gap-3 glitch-hover">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                سلة التسوق
+            </a>
+        </div>
+    </div>
+
+    <!-- Product Details Section -->
+    <section class="container mx-auto px-4 py-12 flex-grow" id="product-container">
+        <!-- Content will be injected by JS -->
+        <div class="flex justify-center items-center h-64">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-neonPurple"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-cardBg/50 pt-16 pb-8 border-t border-white/10 mt-12 backdrop-blur-sm relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <!-- Brand Section (Right in RTL) -->
+                <div class="text-center md:text-right">
+                    <h3 class="text-2xl font-bold font-pixel text-neonPurple mb-4 drop-shadow-[0_0_5px_rgba(188,19,254,0.5)]">DLT Store</h3>
+                    <p class="text-gray-300 mb-6 text-lg">إذا كان للعب مجرة... فهنا مجرته 🪐</p>
+                    <div class="flex justify-center md:justify-start gap-4">
+                        <a href="#" class="bg-white/5 hover:bg-neonPurple/20 p-3 rounded-full transition group border border-white/10 hover:border-neonPurple/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300 group-hover:text-neonPurple transition" fill="currentColor" viewBox="0 0 448 512">
+                                <path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17h0A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14z"/>
+                            </svg>
+                        </a>
+                         <a href="#" class="bg-white/5 hover:bg-neonBlue/20 p-3 rounded-full transition group border border-white/10 hover:border-neonBlue/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300 group-hover:text-neonBlue transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 18.5h-13a2 2 0 01-2-2v-13a2 2 0 012-2h13a2 2 0 012 2v13a2 2 0 01-2 2z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links Section (Left in RTL) -->
+                <div class="text-center md:text-left">
+                    <h3 class="text-xl font-bold text-white mb-6 border-b border-white/10 inline-block md:block pb-2">روابط مهمة</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-neonBlue transition flex items-center justify-center md:justify-end gap-2 group glitch-hover">
+                            <span class="group-hover:-translate-x-1 transition">من نحن ؟</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-neonBlue opacity-0 group-hover:opacity-100 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-neonBlue transition flex items-center justify-center md:justify-end gap-2 group glitch-hover">
+                            <span class="group-hover:-translate-x-1 transition">سياسة الاستبدال والاسترجاع</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-neonBlue opacity-0 group-hover:opacity-100 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                        </a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-neonBlue transition flex items-center justify-center md:justify-end gap-2 group glitch-hover">
+                            <span class="group-hover:-translate-x-1 transition">تواصل معنا</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-neonBlue opacity-0 group-hover:opacity-100 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/5 pt-8 text-center text-gray-600 text-sm">
+                <p>&copy; 2024 DLT Store. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="products.js"></script>
+    <script src="cart.js"></script>
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+    <script>
+        // Product Details Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            const container = document.getElementById('product-container');
+
+            if (!productId) {
+                container.innerHTML = '<div class="text-center text-red-500 text-xl font-bold py-20">لم يتم تحديد منتج! <br> <a href="index.html" class="text-neonBlue hover:underline mt-4 block">العودة للرئيسية</a></div>';
+                return;
+            }
+
+            function getAdminProductById(id) {
+                try {
+                    const raw = localStorage.getItem('dlt_products');
+                    const list = raw ? JSON.parse(raw) : [];
+                    return list.find(p => p.id === id) || null;
+                } catch { return null; }
+            }
+            let product = getProductById(productId);
+            if (!product) {
+                const p = getAdminProductById(productId);
+                if (p) {
+                    product = {
+                        id: p.id,
+                        name: p.name,
+                        price: p.price,
+                        image: p.imageUrl || '',
+                        category: p.category || '',
+                        developer: '',
+                        description: p.desc || '',
+                        longDescription: p.desc || '',
+                        features: Array.isArray(p.features) ? p.features : [],
+                        badges: Array.isArray(p.badges) ? p.badges : []
+                    };
+                }
+            }
+
+            if (!product) {
+                container.innerHTML = '<div class="text-center text-red-500 text-xl font-bold py-20">المنتج غير موجود! <br> <a href="index.html" class="text-neonBlue hover:underline mt-4 block">العودة للرئيسية</a></div>';
+                return;
+            }
+
+            // Update Page Title
+            document.title = `${product.name} - DLT Store`;
+
+            // Build Features List
+            const featuresHtml = product.features ? 
+                `<div class="mt-8">
+                    <h3 class="text-xl font-bold text-neonBlue mb-4 font-pixel">مميزات اللعبة:</h3>
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        ${product.features.map(feature => `
+                            <li class="flex items-center text-gray-300 bg-white/5 p-3 rounded-lg border border-white/5 hover:border-neonPurple/30 transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-neonGreen ml-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                ${feature}
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>` : '';
+
+            window.currentProductData = { name: product.name, price: product.price, image: product.image };
+            window.addCurrentProductToCart = function() { addToCart(window.currentProductData); };
+            // Render Product
+            container.innerHTML = `
+                <div class="bg-cardBg/50 rounded-2xl p-6 md:p-12 border border-white/10 shadow-[0_0_50px_rgba(188,19,254,0.1)] relative overflow-hidden">
+                    <!-- Background Glow -->
+                    <div class="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-neonPurple/5 to-neonBlue/5 pointer-events-none"></div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+                        <!-- Image Section -->
+                        <div class="relative group">
+                            <div class="absolute inset-0 bg-neonPurple/20 blur-2xl rounded-xl group-hover:bg-neonPurple/30 transition duration-500"></div>
+                            <img src="${product.image}" alt="${product.name}" class="relative w-full rounded-2xl shadow-2xl border border-white/10 group-hover:scale-[1.02] transition duration-500 z-10 object-cover h-[400px] lg:h-[500px]">
+                            <div class="absolute top-4 right-4 z-20 flex gap-2">
+                                ${(Array.isArray(product.badges) ? product.badges : []).map(badge => `
+                                    <span class="bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-white/10">${badge}</span>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Info Section -->
+                        <div class="flex flex-col justify-center">
+                            <div class="mb-2 flex items-center gap-2">
+                                <span class="text-neonBlue text-sm font-bold border border-neonBlue/30 px-3 py-1 rounded-full bg-neonBlue/10">${product.category}</span>
+                                <span class="text-gray-400 text-sm">${product.developer}</span>
+                            </div>
+                            
+                            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 font-pixel leading-tight">
+                                ${product.name}
+                            </h1>
+                            
+                            <p class="text-gray-300 text-lg leading-relaxed mb-6 border-r-4 border-neonPurple pr-4 bg-white/5 p-4 rounded-l-xl">
+                                ${product.longDescription || product.description}
+                            </p>
+
+                            <div class="flex flex-wrap items-center gap-6 mb-8">
+                                <div class="text-4xl font-bold text-neonGreen font-pixel drop-shadow-[0_0_10px_rgba(57,255,20,0.5)]">
+                                    ${product.price} ر.س
+                                </div>
+                                <div class="flex items-center gap-2 text-yellow-400">
+                                    <div class="flex">
+                                        ★★★★★
+                                    </div>
+                                    <span class="text-gray-400 text-sm">(تقييمات عالية)</span>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-4 mb-8">
+                                <button onclick="addCurrentProductToCart()" class="add-to-cart-btn flex-1 bg-neonPurple hover:bg-neonPurple/80 text-white font-bold py-4 px-8 rounded-xl transition transform hover:scale-105 hover:shadow-[0_0_20px_rgba(217,0,255,0.4)] flex items-center justify-center gap-3 text-lg" data-name="${product.name}" data-price="${product.price}" data-image="${product.image}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                                    إضافة للسلة
+                                </button>
+                                <button class="bg-white/5 hover:bg-white/10 text-white p-4 rounded-xl border border-white/10 transition hover:border-neonBlue hover:text-neonBlue">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                                </button>
+                            </div>
+
+                            ${featuresHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

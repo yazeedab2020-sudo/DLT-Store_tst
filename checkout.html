@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الشراء - DLT Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@300;400;500;700;800&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B001A',
+                        cardBg: '#1A0B2E',
+                        neonGreen: '#00FFA3',
+                        neonPurple: '#D900FF',
+                        neonBlue: '#00F0FF',
+                        spaceBlue: '#2D1B69',
+                    },
+                    fontFamily: {
+                        sans: ['Changa', 'sans-serif'],
+                        pixel: ['Silkscreen', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Changa', sans-serif; }
+    </style>
+</head>
+<body class="bg-darkBg text-white flex flex-col min-h-screen">
+    <nav class="bg-cardBg/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10 shadow-[0_0_15px_rgba(188,19,254,0.3)]">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-bold font-pixel text-neonPurple tracking-wider flex items-center gap-2">
+                <a href="index.html" class="flex items-center gap-2">
+                    <span class="text-2xl md:text-3xl">🪐</span> DLT <span class="text-neonBlue">STORE</span>
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-6 space-x-reverse">
+                <a href="index.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">الرئيسية</a>
+                <a href="pc-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب PC</a>
+                <a href="offline-games.html" class="hover:text-neonPurple transition hover:shadow-[0_0_10px_rgba(217,0,255,0.5)]">ألعاب أوفلاين</a>
+            </div>
+            <div class="flex items-center space-x-2 md:space-x-4 space-x-reverse">
+                <button class="hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                </button>
+                <div id="account-area" class="flex items-center"></div>
+                <a href="checkout.html" class="relative hover:text-neonBlue transition transform hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-neonBlue text-darkBg text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_#00F0FF] hidden">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container mx-auto px-4 py-10 flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Right Column: Products List & Customer Details -->
+            <div class="lg:col-span-8 space-y-6">
+                
+                <!-- Products List -->
+                <div class="bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(217,0,255,0.05)]">
+                    <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 font-pixel">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neonPurple" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+                        سلة المشتريات
+                    </h2>
+                    <div id="checkout-items" class="space-y-0 divide-y divide-white/10"></div>
+                </div>
+
+                <!-- Customer Details & Payment -->
+                <div class="bg-cardBg/80 border border-white/10 rounded-2xl p-6 shadow-[0_0_30px_rgba(0,240,255,0.05)]">
+                    <h2 class="text-xl font-bold text-neonBlue mb-6 font-pixel">بيانات العميل والدفع</h2>
+                    
+                    <!-- Customer Inputs -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <input id="cust-name" type="text" placeholder="الاسم الكامل" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition">
+                        <input id="cust-phone" type="tel" placeholder="رقم الجوال" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition">
+                        <input id="cust-email" type="email" placeholder="البريد الإلكتروني" class="w-full bg-black/30 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-neonPurple focus:ring-1 focus:ring-neonPurple transition md:col-span-2">
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <h3 class="text-sm text-gray-400 mb-3">طريقة الدفع</h3>
+                    <div class="grid grid-cols-3 gap-3 mb-2">
+                        <button data-method="apple" class="pay-method bg-white/5 hover:bg-white/10 text-white px-4 py-4 rounded-xl border border-white/10 transition font-bold flex flex-col items-center justify-center gap-2 group">
+                            <span class="group-hover:text-neonGreen transition">Apple Pay</span>
+                        </button>
+                        <button data-method="mada" class="pay-method bg-white/5 hover:bg-white/10 text-white px-4 py-4 rounded-xl border border-white/10 transition font-bold flex flex-col items-center justify-center gap-2 group">
+                            <span class="group-hover:text-neonBlue transition">مدى</span>
+                        </button>
+                        <button data-method="visa" class="pay-method bg-white/5 hover:bg-white/10 text-white px-4 py-4 rounded-xl border border-white/10 transition font-bold flex flex-col items-center justify-center gap-2 group">
+                            <span class="group-hover:text-neonPurple transition">Visa</span>
+                        </button>
+                    </div>
+                    <p id="method-hint" class="text-xs text-gray-500 mb-4">اختر وسيلة الدفع المناسبة لك</p>
+                </div>
+
+            </div>
+
+            <!-- Left Column: Order Summary (Sticky) -->
+            <div class="lg:col-span-4 sticky top-28">
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-[0_0_40px_rgba(188,19,254,0.1)]">
+                    <h2 class="text-xl font-bold text-white mb-6 font-pixel border-b border-white/10 pb-4">ملخص الطلب</h2>
+                    
+                    <div class="space-y-3 mb-6">
+                        <div class="flex justify-between text-gray-400 text-sm">
+                            <span>مجموع المنتجات</span>
+                            <span id="summary-subtotal">0 ر.س</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400 text-sm">
+                            <span>ضريبة القيمة المضافة</span>
+                            <span>شامل الضريبة</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center mb-8 pt-4 border-t border-white/10">
+                        <span class="text-lg font-bold text-white">الإجمالي</span>
+                        <span id="checkout-total" class="text-2xl font-bold text-neonGreen font-pixel">0 ر.س</span>
+                    </div>
+
+                    <button id="pay-btn" class="w-full bg-gradient-to-r from-neonPurple to-spaceBlue hover:from-neonPurple/90 hover:to-spaceBlue/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-neonPurple/20 transition transform hover:scale-[1.02] active:scale-[0.98]">
+                        إتمام الطلب
+                    </button>
+
+                    <div id="loading" class="hidden mt-4 text-center">
+                        <div class="inline-flex items-center gap-2 text-gray-300 text-sm">
+                            <svg class="animate-spin h-4 w-4 text-neonGreen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
+                            جاري المعالجة الآمنة...
+                        </div>
+                    </div>
+                    
+                    <p id="form-error" class="hidden mt-3 text-red-400 text-xs text-center bg-red-900/20 py-2 rounded border border-red-500/20">يرجى إكمال جميع البيانات واختيار طريقة الدفع</p>
+
+                    <div class="mt-6 flex justify-center gap-4 opacity-50 grayscale hover:grayscale-0 transition duration-500">
+                        <!-- Trust badges placeholder -->
+                        <div class="h-6 w-10 bg-white/10 rounded"></div>
+                        <div class="h-6 w-10 bg-white/10 rounded"></div>
+                        <div class="h-6 w-10 bg-white/10 rounded"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="bg-cardBg/50 pt-12 pb-8 border-t border-white/10 mt-12 backdrop-blur-sm">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            <p>&copy; 2024 DLT Store. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script src="auth.js"></script>
+    <script>
+        let selectedMethod = '';
+        function groupCart(cart) {
+            const map = new Map();
+            cart.forEach(item => {
+                const key = `${item.name}|${item.price}|${item.image}`;
+                const exist = map.get(key);
+                if (exist) {
+                    exist.qty += 1;
+                } else {
+                    map.set(key, { name: item.name, price: item.price, image: item.image, qty: 1 });
+                }
+            });
+            return Array.from(map.values());
+        }
+        function renderCheckout() {
+            const container = document.getElementById('checkout-items');
+            const totalEl = document.getElementById('checkout-total');
+            const subtotalEl = document.getElementById('summary-subtotal');
+            
+            if (!container || !totalEl) return;
+            
+            const cart = getCart();
+            const groups = groupCart(cart);
+            
+            if (!groups.length) {
+                container.innerHTML = '<div class="text-gray-400 py-12 text-center flex flex-col items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-4 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>سلة المشتريات فارغة</div>';
+                totalEl.innerText = '0 ر.س';
+                if(subtotalEl) subtotalEl.innerText = '0 ر.س';
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = groups.map(g => {
+                const lineTotal = g.price * g.qty;
+                total += lineTotal;
+                return `
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between py-6 gap-4 group transition hover:bg-white/5 px-4 -mx-4 rounded-xl">
+                        <!-- Product Info -->
+                        <div class="flex items-center gap-4 w-full md:w-auto">
+                            <div class="relative group/img">
+                                <img src="${g.image}" alt="${g.name}" class="w-20 h-20 object-cover rounded-xl border border-white/10 shadow-sm transition group-hover/img:scale-105">
+                                <button onclick="removeAllByKey('${g.name}', ${g.price}, '${g.image}')" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover/img:opacity-100 transition shadow-md hover:bg-red-600 scale-90 hover:scale-110" title="حذف الكل">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                </button>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-lg mb-1">${g.name}</h4>
+                                <div class="text-neonPurple text-sm font-bold">${g.price} ر.س</div>
+                            </div>
+                        </div>
+
+                        <!-- Quantity & Actions -->
+                        <div class="flex items-center justify-between w-full md:w-auto gap-8 pl-4">
+                            <!-- Quantity Control -->
+                            <div class="flex items-center bg-black/40 rounded-lg border border-white/10 overflow-hidden">
+                                <button onclick="removeOneByKey('${g.name}', ${g.price}, '${g.image}')" class="px-3 py-1.5 text-gray-400 hover:text-white transition hover:bg-white/10 active:bg-white/20">-</button>
+                                <span class="px-3 text-white font-bold w-8 text-center text-sm">${g.qty}</span>
+                                <button onclick="addToCart({name:'${g.name}', price:${g.price}, image:'${g.image}'})" class="px-3 py-1.5 text-gray-400 hover:text-white transition hover:bg-white/10 active:bg-white/20">+</button>
+                            </div>
+
+                            <!-- Total Price -->
+                            <div class="flex items-center gap-6">
+                                <div class="text-neonGreen font-bold font-pixel text-lg min-w-[80px] text-left" dir="ltr">${lineTotal.toFixed(2)} <span class="text-xs font-sans text-gray-500">ر.س</span></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const formattedTotal = total.toFixed(2) + ' ر.س';
+            totalEl.innerText = formattedTotal;
+            if(subtotalEl) subtotalEl.innerText = formattedTotal;
+        }
+        function attachPaymentButtons() {
+            document.querySelectorAll('.pay-method').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.pay-method').forEach(b => b.classList.remove('ring-2','ring-neonPurple','ring-offset-2','ring-offset-darkBg'));
+                    btn.classList.add('ring-2','ring-neonPurple','ring-offset-2','ring-offset-darkBg');
+                    selectedMethod = btn.getAttribute('data-method') || '';
+                    const hint = document.getElementById('method-hint');
+                    if (hint) hint.textContent = selectedMethod ? 'طريقة الدفع المحددة: ' + selectedMethod : 'اختر طريقة الدفع للاستمرار';
+                });
+            });
+        }
+        function attachPayAction() {
+            const payBtn = document.getElementById('pay-btn');
+            const loading = document.getElementById('loading');
+            const errorEl = document.getElementById('form-error');
+            const nameEl = document.getElementById('cust-name');
+            const emailEl = document.getElementById('cust-email');
+            const phoneEl = document.getElementById('cust-phone');
+            if (!payBtn) return;
+            payBtn.addEventListener('click', () => {
+                const name = nameEl?.value.trim();
+                const email = emailEl?.value.trim();
+                const phone = phoneEl?.value.trim();
+                const cart = getCart();
+                const valid = name && email && phone && selectedMethod && cart.length;
+                if (!valid) {
+                    errorEl?.classList.remove('hidden');
+                    return;
+                }
+                errorEl?.classList.add('hidden');
+                payBtn.disabled = true;
+                loading?.classList.remove('hidden');
+                setTimeout(() => {
+                    window.location.href = 'success.html';
+                }, 1500);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCheckout();
+            attachPaymentButtons();
+            attachPayAction();
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
